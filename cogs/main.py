@@ -1,6 +1,7 @@
 import discord
 from discord.ext import commands
 from discord import app_commands
+from var import version
 
 sound_selected = "None"
 sounds_path = "/home/Tintin/discord_bot/SoundBot/sounds/"
@@ -35,6 +36,17 @@ class main(commands.Cog):
         
         fmt = await ctx.bot.tree.sync()
         await ctx.send(f"{len(fmt)} commandes ont été synchronisées.")
+        
+        
+    # Affiche la version du Bot
+    @app_commands.command(name="version", description="Affiche la version du Bot.")
+    async def ver(self, interaction: discord.Integration) -> None:
+        await interaction.response.send_message(f"SoundBot en version **{version}**.")
+        
+    # Envoie le Lien du Github du Bot
+    @app_commands.command(name="github", description="Récupère le lien du repo Github.")
+    async def git(self, interaction: discord.Interaction) -> None:
+        await interaction.response.send_message(f"Lien du repo: https://github.com/Tintin361/SoundBot")
         
     
     # Connexion au salon vocal de l'utilisateur
@@ -77,7 +89,9 @@ class main(commands.Cog):
         discord.app_commands.Choice(name="SEEEEEEEEGS", value="4"),
         discord.app_commands.Choice(name="Tu veux du pain ?", value="5"),
         discord.app_commands.Choice(name="Une blague sur les noirs", value="6"),
-        discord.app_commands.Choice(name="Pouf", value="7")])
+        discord.app_commands.Choice(name="Pouf", value="7"),
+        discord.app_commands.Choice(name="Ta gueule", value="8"),
+        discord.app_commands.Choice(name="C'est pas toi qui décide", value="9")])
     async def sound_command(self, interaction: discord.Interaction, son: discord.app_commands.Choice[str]):
         
         try:
@@ -97,7 +111,7 @@ class main(commands.Cog):
             self.voice.stop()
         self.voice.play(discord.FFmpegPCMAudio(f"{sounds_path}{son.name}.mp3"))
         
-        await interaction.response.send_message(f"Lecture du son: '{son.name}'.")
+        await interaction.response.send_message(f"Lecture du son: '**{son.name}**'.")
 
 async def setup(bot):
     await bot.add_cog(main(bot))
