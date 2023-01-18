@@ -41,7 +41,7 @@ class main(commands.Cog):
     # Affiche la version du Bot
     @app_commands.command(name="version", description="Affiche la version du Bot.")
     async def ver(self, interaction: discord.Integration) -> None:
-        await interaction.response.send_message(f"SoundBot en version **{version}**.")
+        await interaction.response.send_message(f"SoundBot est en version **{version}**.")
         
     # Envoie le Lien du Github du Bot
     @app_commands.command(name="github", description="Récupère le lien du repo Github.")
@@ -91,7 +91,9 @@ class main(commands.Cog):
         discord.app_commands.Choice(name="Une blague sur les noirs", value="6"),
         discord.app_commands.Choice(name="Pouf", value="7"),
         discord.app_commands.Choice(name="Ta gueule", value="8"),
-        discord.app_commands.Choice(name="C'est pas toi qui décide", value="9")])
+        discord.app_commands.Choice(name="C'est pas toi qui décide", value="9"),
+        discord.app_commands.Choice(name="Feur", value="10"),
+        ])
     async def sound_command(self, interaction: discord.Interaction, son: discord.app_commands.Choice[str]):
         
         try:
