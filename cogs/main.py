@@ -18,7 +18,7 @@ class main(commands.Cog):
     async def on_ready(self):
         print("Démarrage du SoundBot")
         await self.bot.change_presence(status=discord.Status.online, activity=discord.Activity(type=discord.ActivityType.listening,
-                                                                                               name="Tu veux du pain en boucle."))
+                                                                                               name="Teuse qui dit feur en boucle."))
         
     @commands.Cog.listener()
     async def on_message(self, message):
@@ -32,11 +32,8 @@ class main(commands.Cog):
     # Pour synchroniser les commandes slash
     @commands.command()
     async def sync(self, ctx) -> None:
-        ctx.bot.tree.clear_commands(guild=ctx.guild)
-        
         fmt = await ctx.bot.tree.sync()
         await ctx.send(f"{len(fmt)} commandes ont été synchronisées.")
-        
         
     # Affiche la version du Bot
     @app_commands.command(name="version", description="Affiche la version du Bot.")
