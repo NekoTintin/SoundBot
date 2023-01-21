@@ -89,6 +89,9 @@ class main(commands.Cog):
         discord.app_commands.Choice(name="Ta gueule", value="8"),
         discord.app_commands.Choice(name="C'est pas toi qui décide", value="9"),
         discord.app_commands.Choice(name="Feur", value="10"),
+        discord.app_commands.Choice(name="C'est bien Éleonore", value="11"),
+        discord.app_commands.Choice(name="Proverbe", value="12"),
+        discord.app_commands.Choice(name="Oh these are pretty cool bananas", value="13"),
         ])
     async def sound_command(self, interaction: discord.Interaction, son: discord.app_commands.Choice[str]):
         
