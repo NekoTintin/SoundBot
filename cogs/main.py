@@ -3,7 +3,6 @@ from discord.ext import commands
 from discord import app_commands
 from var import version
 
-sound_selected = "None"
 sounds_path = "/home/Tintin/discord_bot/SoundBot/sounds/"
 
 class main(commands.Cog):
@@ -37,7 +36,7 @@ class main(commands.Cog):
         
     # Affiche la version du Bot
     @app_commands.command(name="version", description="Affiche la version du Bot.")
-    async def ver(self, interaction: discord.Integration) -> None:
+    async def ver(self, interaction: discord.Interaction) -> None:
         await interaction.response.send_message(f"SoundBot est en version **{version}**.")
         
     # Envoie le Lien du Github du Bot
