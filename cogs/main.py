@@ -17,7 +17,7 @@ class main(commands.Cog):
     async def on_ready(self):
         print("Démarrage du SoundBot")
         await self.bot.change_presence(status=discord.Status.online, activity=discord.Activity(type=discord.ActivityType.listening,
-                                                                                               name="Teuse qui dit feur en boucle."))
+                                                                                               name="JDG VS. 2.0 en boucle."))
         
     @commands.Cog.listener()
     async def on_message(self, message):
@@ -112,7 +112,7 @@ class main(commands.Cog):
             self.voice.stop()
         self.voice.play(discord.FFmpegPCMAudio(f"{sounds_path}{son.name}.mp3"))
         
-        await interaction.response.send_message(f"Lecture du son: '**{son.name}**'.")
+        await interaction.response.send_message(f"Lecture du son: '**{son.name}**'.", ephemeral=True)
 
 async def setup(bot):
     await bot.add_cog(main(bot))
