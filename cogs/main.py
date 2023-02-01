@@ -16,8 +16,7 @@ class main(commands.Cog):
     @commands.Cog.listener()
     async def on_ready(self):
         print("Démarrage du SoundBot")
-        await self.bot.change_presence(status=discord.Status.online, activity=discord.Activity(type=discord.ActivityType.listening,
-                                                                                               name="JDG VS. 2.0 en boucle."))
+        await self.bot.change_presence(status=discord.Status.online, activity=discord.Activity(type=discord.ActivityType.listening, name="Fart Reverb SFX."))
         
     @commands.Cog.listener()
     async def on_message(self, message):
@@ -77,7 +76,7 @@ class main(commands.Cog):
         
     # Joue un son parmi dans la liste
     @app_commands.command(name="sound", description="Jouer un son dans un salon vocal.")
-    @app_commands.describe(son="Sélectionnez un son")
+    @app_commands.describe(son="Sélectionne un son")
     @app_commands.choices(son=[
         discord.app_commands.Choice(name="C'est nul !", value="1"),
         discord.app_commands.Choice(name="Fart Reverb SFX", value="2"),
@@ -110,7 +109,7 @@ class main(commands.Cog):
             
         if self.voice.is_playing():
             self.voice.stop()
-        self.voice.play(discord.FFmpegPCMAudio(f"{sounds_path}{son.name}.mp3"))
+        self.voice.play(source=discord.FFmpegPCMAudio(f"{sounds_path}{son.name}.mp3"))
         
         await interaction.response.send_message(f"Lecture du son: '**{son.name}**'.", ephemeral=True)
 
