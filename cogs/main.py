@@ -91,6 +91,8 @@ class main(commands.Cog):
         discord.app_commands.Choice(name="C'est bien Éleonore", value="11"),
         discord.app_commands.Choice(name="Proverbe", value="12"),
         discord.app_commands.Choice(name="Oh these are pretty cool bananas", value="13"),
+        discord.app_commands.Choice(name="Ah merde, c'est con ça", value="14"),
+        discord.app_commands.Choice(name="Ouais mais c’est pas toi qui décide", value="15") # Nique ta mère la virgule
         ])
     async def sound_command(self, interaction: discord.Interaction, son: discord.app_commands.Choice[str]):
         
@@ -112,6 +114,14 @@ class main(commands.Cog):
         self.voice.play(source=discord.FFmpegPCMAudio(f"{sounds_path}{son.name}.mp3"))
         
         await interaction.response.send_message(f"Lecture du son: '**{son.name}**'.", ephemeral=True)
+        
+    @app_commands.command(name="stop", description="Stop le son en cours de lecture.")
+    async def stop_sound(self, interaction: discord.Interaction) -> None:
+        if self.voice.is_playing() == True:
+            self.voice.stop()
+            await interaction.response.send_message("Arrêt du son en cours de lecture.", ephemeral=True)
+        else:
+            await interaction.response.send_message("Aucun son n'est en cours de lecture...", ephemeral=True)
 
 async def setup(bot):
     await bot.add_cog(main(bot))
