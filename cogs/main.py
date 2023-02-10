@@ -1,11 +1,10 @@
 import discord
 from discord.ext import commands
 from discord import app_commands
-from var import version
 
 sounds_path = "/home/Tintin/discord_bot/SoundBot/sounds/"
 
-class main(commands.Cog):
+class Main(commands.GroupCog, name="sound"):
     
     def __init__(self, bot: commands.bot) -> None:
         self.bot = bot
@@ -20,28 +19,10 @@ class main(commands.Cog):
         
     @commands.Cog.listener()
     async def on_message(self, message):
-        msg_str = str(message.content)
         if message.author == self.bot.user:
             return
         if self.bot.user.mentioned_in(message) and message.mention_everyone == False:
             await message.channel.send(f"Hello {message.author.mention}, les commandes sont indiquées quand tu écrit '/' dans le chat.")
-            
-    
-    # Pour synchroniser les commandes slash
-    @commands.command()
-    async def sync(self, ctx) -> None:
-        fmt = await ctx.bot.tree.sync()
-        await ctx.send(f"{len(fmt)} commandes ont été synchronisées.")
-        
-    # Affiche la version du Bot
-    @app_commands.command(name="version", description="Affiche la version du Bot.")
-    async def ver(self, interaction: discord.Interaction) -> None:
-        await interaction.response.send_message(f"SoundBot est en version **{version}**.")
-        
-    # Envoie le Lien du Github du Bot
-    @app_commands.command(name="github", description="Récupère le lien du repo Github.")
-    async def git(self, interaction: discord.Interaction) -> None:
-        await interaction.response.send_message(f"Lien du repo: https://github.com/Tintin361/SoundBot")
         
     
     # Connexion au salon vocal de l'utilisateur
@@ -50,7 +31,7 @@ class main(commands.Cog):
         try:
             self.channel = interaction.user.voice.channel
         except:
-            await interaction.response.send_message("Tu n'est pas connecté dans un salon vocal")
+            await interaction.response.send_message("Tu n'est pas connecté dans un salon vocal", ephemeral=True)
             return
         
         guild = interaction.guild
@@ -70,12 +51,12 @@ class main(commands.Cog):
         
         try:
             await self.voice.disconnect()
-            await interaction.response.send_message("Déconnecté")
+            await interaction.response.send_message("Déconnecté", ephemeral=True)
         except:
-            await interaction.response.send_message("Le bot n'est connecté dans aucun salon vocal.")
+            await interaction.response.send_message("Le bot n'est connecté dans aucun salon vocal.", ephemeral=True)
         
     # Joue un son parmi dans la liste
-    @app_commands.command(name="sound", description="Jouer un son dans un salon vocal.")
+    @app_commands.command(name="play", description="Jouer un son dans un salon vocal.")
     @app_commands.describe(son="Sélectionne un son")
     @app_commands.choices(son=[
         discord.app_commands.Choice(name="C'est nul !", value="1"),
@@ -124,4 +105,4 @@ class main(commands.Cog):
             await interaction.response.send_message("Aucun son n'est en cours de lecture...", ephemeral=True)
 
 async def setup(bot):
-    await bot.add_cog(main(bot))
+    await bot.add_cog(Main(bot))
